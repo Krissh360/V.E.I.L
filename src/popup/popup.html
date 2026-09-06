@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VEIL</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    <!-- Header -->
+    <header class="popup-header">
+      <div class="logo-row">
+        <div class="title-group">
+          <h1>VEIL</h1>
+          <span class="subtitle">Visual Edge Inference Layer</span>
+        </div>
+      </div>
+      <div class="server-status" id="server-status">
+        <span class="status-dot" id="status-dot"></span>
+        <span id="status-text">Checking...</span>
+      </div>
+    </header>
+
+    <!-- Active Status Banner -->
+    <div class="status-banner" id="status-banner">
+      <div class="banner-left">
+        <span class="protection-dot active" id="protection-dot"></span>
+        <span class="banner-title" id="protection-title">Protection active</span>
+      </div>
+      <button class="action-btn toggle-btn" id="toggle-btn" type="button">Turn off</button>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="button-group">
+      <button class="action-btn primary-btn" id="activate-btn" type="button">
+        <span id="activate-btn-text">Scan page</span>
+      </button>
+    </div>
+
+    <div class="judge-tabs" role="tablist" aria-label="Popup views">
+      <button class="judge-tab active" id="overview-tab" type="button" role="tab">Overview</button>
+      <button class="judge-tab" id="judge-tab" type="button" role="tab">Judge View</button>
+    </div>
+
+    <section class="judge-view" id="judge-view" style="display: none;">
+      <div class="judge-heading"><span>Judge View</span><small>Ground truth from this run</small></div>
+      <article class="judge-card local-card">
+        <div class="judge-card-title">On this device <span>never leaves this device</span></div>
+        <div class="judge-local-grid">
+          <div class="face-evidence"><canvas id="judge-face" width="120" height="120"></canvas><span>FACE / local</span></div>
+          <div class="judge-values" id="judge-values"></div>
+        </div>
+      </article>
+      <article class="judge-card sent-card">
+        <div class="judge-card-title">Sent to server <span>RAAP v1 / redacted only</span></div>
+        <pre id="judge-payload">Run the page scan to inspect the transmitted payload.</pre>
+      </article>
+    </section>
+
+    <div id="overview-view">
+    <!-- Pipeline Status -->
+    <div class="pipeline-section" id="pipeline-section" style="display: none;">
+      <h2 class="section-title">Pipeline</h2>
+      <div class="pipeline-stages">
+        <div class="stage" id="stage-capture" data-stage="capture">
+          <span class="stage-number">01</span>
+          <span class="stage-name">Page capture</span>
+          <span class="stage-status" id="stage-capture-status">○</span>
+        </div>
+        <div class="stage" id="stage-dom_extract" data-stage="dom_extract">
+          <span class="stage-number">02</span>
+          <span class="stage-name">Page structure</span>
+          <span class="stage-status" id="stage-dom_extract-status">○</span>
+        </div>
+        <div class="stage" id="stage-text_detect" data-stage="text_detect">
+          <span class="stage-number">03</span>
+          <span class="stage-name">Text scan</span>
+          <span class="stage-status" id="stage-text_detect-status">○</span>
+        </div>
+        <div class="stage" id="stage-face_detect" data-stage="face_detect">
+          <span class="stage-number">04</span>
+          <span class="stage-name">Face scan</span>
+          <span class="stage-status" id="stage-face_detect-status">○</span>
+        </div>
+        <div class="stage" id="stage-redaction" data-stage="redaction">
+          <span class="stage-number">05</span>
+          <span class="stage-name">Redaction</span>
+          <span class="stage-status" id="stage-redaction-status">○</span>
+        </div>
+        <div class="stage" id="stage-network" data-stage="network">
+          <span class="stage-number">06</span>
+          <span class="stage-name">Reasoning</span>
+          <span class="stage-status" id="stage-network-status">○</span>
+        </div>
+        <div class="stage" id="stage-action_execute" data-stage="action_execute">
+          <span class="stage-number">07</span>
+          <span class="stage-name">Actions</span>
+          <span class="stage-status" id="stage-action_execute-status">○</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results -->
+    <div class="results-section" id="results-section" style="display: none;">
+      <!-- Detection Summary -->
+      <div class="result-card" id="detection-card">
+        <h3 class="card-title">Detections</h3>
+        <div class="detection-grid" id="detection-grid"></div>
+      </div>
+
+      <!-- Metrics -->
+      <div class="result-card" id="metrics-card">
+        <h3 class="card-title">Timing</h3>
+        <div class="metrics-grid" id="metrics-grid"></div>
+      </div>
+
+      <!-- Action Plan -->
+      <div class="result-card" id="action-card">
+        <h3 class="card-title">Actions</h3>
+        <div class="action-list" id="action-list"></div>
+      </div>
+
+      <!-- RAAP Payload Preview -->
+      <div class="result-card">
+        <h3 class="card-title clickable" id="payload-toggle">
+          RAAP Payload <span class="toggle-icon">▶</span>
+        </h3>
+        <pre class="payload-preview" id="payload-preview" style="display: none;"></pre>
+      </div>
+    </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="popup-footer">
+      <span>VEIL / v0.1.0</span>
+    </footer>
+  </div>
+
+  <script src="popup.ts" type="module"></script>
+</body>
+</html>

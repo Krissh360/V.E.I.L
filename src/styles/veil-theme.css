@@ -1,0 +1,13 @@
+/* VEIL institutional clearance-document theme. Shared by the popup and demo. */
+:root {
+  --veil-black: #020202;
+  --veil-panel: #13100e;
+  --veil-line: #2A251C;
+  --veil-gold: #A9842E;
+  --veil-gold-dim: #6B5620;
+  --veil-ink: #E7E1D3;
+  --veil-ink-dim: #8C8577;
+  --veil-alert: #8B3A2A;
+  --veil-serif: "IBM Plex Serif", Georgia, serif;
+  --veil-sans: "SF Pro", Inter, "Public Sans", Arial, sans-serif;
+}

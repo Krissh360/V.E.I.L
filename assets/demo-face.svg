@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="Placeholder identity photo">
+  <rect width="240" height="240" fill="#d8c7aa"/>
+  <rect x="14" y="14" width="212" height="212" rx="6" fill="#29313b"/>
+  <circle cx="120" cy="99" r="49" fill="#c98f6f"/>
+  <path d="M68 91c5-45 99-53 105 1-19-20-77-25-105-1Z" fill="#1d1b1c"/>
+  <circle cx="101" cy="103" r="4" fill="#261d1d"/><circle cx="140" cy="103" r="4" fill="#261d1d"/>
+  <path d="M103 127c10 8 23 8 34 0" fill="none" stroke="#7a403a" stroke-width="4" stroke-linecap="round"/>
+  <path d="M46 220c7-61 40-84 74-84s68 23 74 84" fill="#a9842e"/>
+  <text x="120" y="210" text-anchor="middle" fill="#13100e" font-family="Arial, sans-serif" font-size="11" font-weight="700">DEMO ID PHOTO</text>
+</svg>
