@@ -7,7 +7,7 @@
 **Event:** Smart India Hackathon 2026 — TEKATHON-5.0
 **Problem Statement:** SIH26171 (ISRO / Department of Space) — *On-device Visual Perception for Light-weight Browser Agents*
 **Theme:** Smart Automation
-**Status:** 🚧 Phase 1 prototype — in progress
+**Status:** Phase 1 prototype — in progress
 
 ---
 
@@ -163,7 +163,7 @@ Then load it as an unpacked extension:
 
 ## Current phase status
 
-### ✅ Phase 1 — Prototype (in progress)
+### Phase 1 — Prototype (in progress)
 - [x] MV3 extension scaffold
 - [x] Screen capture (tab pixels + DOM/accessibility tree)
 - [x] Local text/DOM PII detection (regex/NER, password field heuristics)
@@ -177,12 +177,12 @@ Then load it as an unpacked extension:
 
 *(Update the checkboxes above as work lands — this section is meant to be the at-a-glance status tracker.)*
 
-### 🔜 Phase 2 — Real reasoning
+### Phase 2 — Real reasoning
 - [ ] Swap stub server logic for an open-weight VLM (Qwen2.5-VL / Qwen3-VL)
 - [ ] Multi-step workflow handling
 - [ ] Canvas/video PII detection (vision path, not just DOM)
 
-### 🔮 Phase 3 — Production hardening
+### Phase 3 — Production hardening
 - [ ] Backend + persistence layer (deferred from Phase 1 by design)
 - [ ] Firefox WebExtensions support
 - [ ] Formal accuracy/latency benchmarking against the five ISRO scoring weights (Context 25% · PII 20% · Redaction 20% · Client 20% · Latency 15%)
