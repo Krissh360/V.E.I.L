@@ -9,7 +9,7 @@
 **Theme:** Smart Automation
 **Status:** Phase 1 prototype — in progress
 
----
+***
 
 ## What this is
 
@@ -31,7 +31,7 @@ The redaction step is a hard architectural gate, not a best-effort filter: no co
 - VEIL makes that trust unnecessary: sensitive data never leaves the device in identifiable form, which matters for government/enterprise use under regulations like India's DPDP Act 2023, and makes agent-assisted workflows viable on screens that mix operational UI with identity data (KYC forms, citizen services, internal ops tools).
 - The reasoning server can be cloud-hosted, on-prem, or fully air-gapped — the privacy guarantee is about *what leaves the device*, not *where the server lives*.
 
----
+***
 
 ## Architecture
 
@@ -44,13 +44,15 @@ The redaction step is a hard architectural gate, not a best-effort filter: no co
                                                                   action plan          — locally
 ```
 
-| Stage | Where it runs | What it does |
-|---|---|---|
-| **Capture** | Extension (content script + background) | Grabs the visible tab + DOM/accessibility tree |
-| **Detect** | Extension, on-device | Vision model flags faces/visual PII; DOM/regex/NER flags emails, phone numbers, passwords, ID numbers |
-| **Redact (VEIL filter)** | Extension, on-device | The gate — destructively blurs flagged pixels, replaces flagged text with typed tokens, assembles the RAAP v1 payload |
-| **Reason** | Server (local stub in Phase 1) | Accepts a RAAP v1 payload, returns an action plan |
-| **Act** | Extension, on-device | Executes the returned actions (click/scroll/fill) against an allowlist — never executes arbitrary instructions |
+**Capture** runs in the extension through the content script and background service worker. It grabs the visible tab and DOM/accessibility tree.
+
+**Detect** runs in the extension on-device. The vision path flags faces and visual PII, while DOM, regex, and NER detection flags emails, phone numbers, passwords, and ID numbers.
+
+**Redact (VEIL filter)** runs in the extension on-device. It is the gate that destructively blurs flagged pixels, replaces flagged text with typed tokens, and assembles the RAAP v1 payload.
+
+**Reason** runs on the server through the local Phase 1 stub. It accepts a RAAP v1 payload and returns an action plan.
+
+**Act** runs in the extension on-device. It executes returned click, scroll, and fill actions against an allowlist and never executes arbitrary instructions.
 
 ### RAAP v1 (Redacted Agent Action Protocol)
 
@@ -70,7 +72,7 @@ The contract between the extension and the server. Roughly:
 
 This is the *only* shape of payload the network layer will accept — see `src/veil-filter/`.
 
----
+***
 
 ## Tech stack
 
@@ -80,7 +82,7 @@ This is the *only* shape of payload the network layer will accept — see `src/v
 - **Server (Phase 1 stub):** FastAPI, Python, in-memory only — no database
 - **Planned server upgrade (Phase 2):** Open-weight VLM (Qwen2.5-VL / Qwen3-VL)
 
----
+***
 
 ## Project structure
 
@@ -114,7 +116,7 @@ VEIL/
 └── vite.config.ts
 ```
 
----
+***
 
 ## Getting started
 
@@ -159,7 +161,29 @@ Then load it as an unpacked extension:
 2. Open the VEIL popup and click **Turn On**.
 3. Watch the pipeline panel light up through each stage (Capture → DOM Extract → Text Detect → Face Detect → Redaction → Reasoning → Execute) as it processes the form.
 
----
+***
+
+## Judge View
+
+The popup includes a **Judge View** tab for inspecting the evidence from the latest page scan. It makes the privacy boundary visible without changing the payload sent to the reasoning server.
+
+### On this device
+
+The local evidence panel shows:
+
+- A face preview captured from the active page, when a labelled face photo is detected
+- Locally detected Aadhaar and password values for demonstration and verification
+- Evidence marked as local-only and retained in the extension result
+
+This evidence is assembled before redaction and is never passed to the API client.
+
+### Sent to server
+
+The transmitted payload panel displays the exact serialized RAAP v1 object handed to the network layer. It contains the redacted graph, typed redaction tokens, and the sanitized image representation. Raw values and the original screenshot are not included in this view of the server payload.
+
+Run **Scan page** before opening Judge View to inspect the current scan. If a prior result does not contain its local preview data, the popup can recover that evidence from the active page without changing the RAAP v1 payload.
+
+***
 
 ## Current phase status
 
@@ -187,7 +211,7 @@ Then load it as an unpacked extension:
 - [ ] Firefox WebExtensions support
 - [ ] Formal accuracy/latency benchmarking against the five ISRO scoring weights (Context 25% · PII 20% · Redaction 20% · Client 20% · Latency 15%)
 
----
+***
 
 ## Known limitations (Phase 1)
 
@@ -196,7 +220,7 @@ Then load it as an unpacked extension:
 - No formal accuracy benchmarking yet — the deck's own principle applies here too: no invented accuracy claims, only what the metrics harness actually measures.
 - Face/visual PII detection may still be partial depending on build status — check the checklist above for current coverage.
 
----
+***
 
 ## Design principles (for anyone touching the redaction path)
 
@@ -204,7 +228,7 @@ Then load it as an unpacked extension:
 - **No invented claims.** Every metric reported should come from the logging harness, not an estimate.
 - **Precision over completeness for Phase 1.** A working end-to-end vertical slice (capture → redact → stub-reason → act) beats a highly polished single stage with the rest missing.
 
----
+***
 
 ## References
 
@@ -217,6 +241,6 @@ Then load it as an unpacked extension:
 - Government of India, Digital Personal Data Protection Act, 2023 — `meity.gov.in`
 - Chrome / Firefox WebExtensions, Manifest V3
 
----
+***
 
 *This README is a living document — update the phase-status checklists and architecture notes as the build progresses through each phase.*
